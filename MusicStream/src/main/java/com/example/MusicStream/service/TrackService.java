@@ -1,8 +1,16 @@
 package com.example.MusicStream.service;
 
+import com.example.MusicStream.dto.TrackDto;
+import com.example.MusicStream.entity.MusicCategory;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+
+
 public interface TrackService {
     TrackDto create(TrackDto dto);
-    List<TrackDto> getAll();
-    TrackDto getById(Long id);
-    void delete(Long id);
+
+    Page<TrackDto> search(String title, MusicCategory category, Pageable pageable);
 }
