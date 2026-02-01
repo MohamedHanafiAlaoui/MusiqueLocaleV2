@@ -1,0 +1,47 @@
+<div class="play-component">
+  <!-- Test Buttons -->
+
+
+  <!-- Audio Player (shown/hidden with *ngIf) -->
+  <div class="audio-player" *ngIf="showAudioPlayer">
+    <!-- Previous Button -->
+    <button 
+      class="nav-button prev-button" 
+      [class.active]="activeButton === 'previous'"
+      (click)="playPreviousTrack()"
+      [disabled]="!hasPreviousTrack"
+      title="Previous Track">
+      ⏮
+    </button>
+
+    <div class="audio-info">
+      <h4 *ngIf="trackTitle">{{ trackTitle }}</h4>
+      <p *ngIf="trackArtist">{{ trackArtist }}</p>
+    </div>
+    
+    <audio 
+      controls
+      [src]="trackUrl"
+      (play)="onAudioPlay()"
+      (pause)="onAudioPause()"
+      (ended)="onAudioEnded()"
+      preload="metadata">
+      Your browser does not support the audio element.
+    </audio>
+
+    <!-- Next Button -->
+    <button 
+      class="nav-button next-button" 
+      [class.active]="activeButton === 'next'"
+      (click)="playNextTrack()"
+      [disabled]="!hasNextTrack"
+      title="Next Track">
+      ⏭
+    </button>
+  </div>
+
+  <!-- Error state when no track URL -->
+  <div class="error-state" *ngIf="!trackUrl">
+    <p>No audio file available</p>
+  </div>
+</div>

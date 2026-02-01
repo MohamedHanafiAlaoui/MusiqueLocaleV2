@@ -1,0 +1,64 @@
+<div class="track-details-container">
+  <div class="loading" *ngIf="loading">
+    <p>Loading track details...</p>
+  </div>
+
+  <div class="track-details" *ngIf="track && !loading">
+    <div class="track-header">
+      <div class="track-info">
+        <h1>{{track.title}}</h1>
+        <h2>{{track.artist}}</h2>
+        <div class="track-meta">
+          <span class="category-badge" [style.background-color]="getCategoryColor(track.category)">
+            {{getCategoryLabel(track.category)}}
+          </span>
+          <span class="duration">{{formatDuration(track.duration)}}</span>
+          <span class="file-size">{{formatFileSize(track.fileSize)}}</span>
+        </div>
+      </div>
+      
+      <div class="track-cover" *ngIf="track.coverImage">
+        <img [src]="track.coverImage" [alt]="track.title" class="cover-image">
+      </div>
+    </div>
+
+    <div class="track-description" *ngIf="track.description">
+      <h3>Description</h3>
+      <p>{{track.description}}</p>
+    </div>
+
+    <div class="audio-player" *ngIf="track.fileUrl">
+      <h3>Audio Player</h3>
+      <div class="player-controls">
+        <button (click)="playAudio()" class="play-btn">
+          {{isPlaying ? '⏸ Pause' : '▶ Play'}}
+        </button>
+        <audio 
+          [src]="track.fileUrl" 
+          (ended)="onAudioEnded()"
+          preload="metadata">
+        </audio>
+      </div>
+      <div class="audio-info">
+        <p><strong>File URL:</strong> <a [href]="track.fileUrl" target="_blank">{{track.fileUrl}}</a></p>
+      </div>
+    </div>
+
+    <div class="track-actions">
+      <button (click)="editTrack()" class="edit-btn">
+        ✏ Edit Track
+      </button>
+      <button (click)="deleteTrack()" class="delete-btn">
+        🗑 Delete Track
+      </button>
+      <button (click)="goBack()" class="back-btn">
+        ← Back to List
+      </button>
+    </div>
+  </div>
+
+  <div class="not-found" *ngIf="!track && !loading">
+    <p>Track not found.</p>
+    <button (click)="goBack()" class="back-btn">← Back to List</button>
+  </div>
+</div>

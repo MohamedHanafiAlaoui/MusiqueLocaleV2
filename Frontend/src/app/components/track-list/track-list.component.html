@@ -1,0 +1,81 @@
+<div class="track-list-container">
+  <div class="search-section">
+    <h2>Music Tracks</h2>
+    <div class="search-filters">
+      <input 
+        type="text" 
+        placeholder="Search by title..." 
+        [(ngModel)]="searchTitle" 
+        (keyup.enter)="onSearch()"
+        class="search-input">
+      
+      <select [(ngModel)]="searchCategory" (change)="onSearch()" class="category-filter">
+        <option value="">All Categories</option>
+        <option *ngFor="let cat of categories" [value]="cat.value">{{cat.label}}</option>
+      </select>
+      
+      <button (click)="onSearch()" class="search-btn">Search</button>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <p>Loading tracks...</p>
+  </div>
+
+  <div class="tracks-grid" *ngIf="!loading && tracks.length > 0">
+    <div *ngFor="let track of tracks" class="track-card">
+      <div class="track-header">
+        <h3 (click)="viewTrackDetails(track)" class="track-title">{{track.title}}</h3>
+        <span class="category-badge" [style.background-color]="getCategoryColor(track.category)">
+          {{track.category}}
+        </span>
+      </div>
+      
+      <div class="track-info">
+        <p class="artist"><strong>Artist:</strong> {{track.artist}}</p>
+        <p class="description" *ngIf="track.description">{{track.description}}</p>
+        <div class="track-details">
+          <span class="duration">{{formatDuration(track.duration)}}</span>
+          <span class="file-size">{{formatFileSize(track.fileSize)}}</span>
+        </div>
+      </div>
+      
+      <div class="track-actions">
+        <button (click)="playTrack(track)" class="play-btn" [class.playing]="isTrackPlaying(track.id!)" [class.no-audio]="!track.fileUrl">
+          {{isTrackPlaying(track.id!) ? '⏸ Pause' : (track.fileUrl ? '▶ Play' : '🔇 No Audio')}}
+        </button>
+        <button (click)="editTrack(track)" class="edit-btn">
+          ✏ Edit
+        </button>
+        <button (click)="deleteTrack(track.id!)" class="delete-btn">
+          🗑 Delete
+        </button>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="no-tracks" *ngIf="!loading && tracks.length === 0">
+    <p>No tracks found. Try adjusting your search criteria.</p>
+  </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button 
+      (click)="onPageChange(currentPage - 1)" 
+      [disabled]="currentPage === 0"
+      class="page-btn">
+      Previous
+    </button>
+    
+    <span class="page-info">
+      Page {{currentPage + 1}} of {{totalPages}} ({{totalElements}} tracks)
+    </span>
+    
+    <button 
+      (click)="onPageChange(currentPage + 1)" 
+      [disabled]="currentPage >= totalPages - 1"
+      class="page-btn">
+      Next
+    </button>
+  </div>
+</div>

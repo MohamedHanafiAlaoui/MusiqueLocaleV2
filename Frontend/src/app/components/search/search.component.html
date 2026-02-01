@@ -1,0 +1,64 @@
+<div class="search-container">
+  <div class="search-bar">
+    <div class="search-input-wrapper">
+      <i class="fas fa-search search-icon"></i>
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="Search tracks by title or artist..."
+        [(ngModel)]="searchQuery"
+        (input)="onSearchInput()"
+        (keyup.enter)="applySearch()"
+      >
+      <button 
+        class="clear-btn" 
+        *ngIf="searchQuery || selectedCategory"
+        (click)="clearSearch()"
+        title="Clear search"
+      >
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <button 
+      class="apply-search-btn" 
+      *ngIf="searchQuery && !showFilters"
+      (click)="applySearch()"
+      title="Apply search"
+    >
+      <i class="fas fa-check"></i>
+    </button>
+  </div>
+
+  <div class="search-filters">
+    <div class="filter-group">
+      <label for="category-filter">Category:</label>
+      <select 
+        id="category-filter" 
+        class="category-select"
+        [(ngModel)]="selectedCategory"
+        (change)="onCategorySelect()"
+      >
+        <option *ngFor="let cat of categories" [value]="cat.value">
+          {{ cat.label }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="active-filters" *ngIf="showFilters && (searchQuery || selectedCategory)">
+    <div class="filter-tag" *ngIf="searchQuery">
+      <i class="fas fa-search"></i>
+      {{ searchQuery }}
+      <button class="remove-filter" (click)="searchQuery = ''; onSearchInput();">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="filter-tag" *ngIf="selectedCategory">
+      <i class="fas fa-tag"></i>
+      {{ selectedCategory }}
+      <button class="remove-filter" (click)="selectedCategory = ''; onCategorySelect();">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+</div>

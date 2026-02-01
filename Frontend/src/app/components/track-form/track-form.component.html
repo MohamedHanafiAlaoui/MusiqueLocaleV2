@@ -1,0 +1,119 @@
+<div class="track-form-container">
+  <h2>{{isEditMode ? 'Edit Track' : 'Add New Track'}}</h2>
+  
+  <form [formGroup]="trackForm" (ngSubmit)="onSubmit()" class="track-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="title">Title *</label>
+        <input 
+          id="title"
+          type="text" 
+          formControlName="title" 
+          class="form-control"
+          placeholder="Enter track title">
+        <span class="error-message" *ngIf="getFieldError('title')">
+          {{getFieldError('title')}}
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="artist">Artist *</label>
+        <input 
+          id="artist"
+          type="text" 
+          formControlName="artist" 
+          class="form-control"
+          placeholder="Enter artist name">
+        <span class="error-message" *ngIf="getFieldError('artist')">
+          {{getFieldError('artist')}}
+        </span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="category">Category *</label>
+        <select id="category" formControlName="category" class="form-control">
+          <option value="">Select a category</option>
+          <option *ngFor="let cat of categories" [value]="cat.value">
+            {{cat.label}}
+          </option>
+        </select>
+        <span class="error-message" *ngIf="getFieldError('category')">
+          {{getFieldError('category')}}
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="duration">Duration (seconds)</label>
+        <input 
+          id="duration"
+          type="number" 
+          formControlName="duration" 
+          class="form-control"
+          placeholder="Duration in seconds"
+          readonly>
+        <small class="form-hint">Duration will be extracted from audio file</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea 
+        id="description"
+        formControlName="description" 
+        class="form-control"
+        rows="3"
+        placeholder="Enter track description (optional)">
+      </textarea>
+      <span class="error-message" *ngIf="getFieldError('description')">
+        {{getFieldError('description')}}
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="coverImage">Cover Image URL</label>
+      <input 
+        id="coverImage"
+        type="url" 
+        formControlName="coverImage" 
+        class="form-control"
+        placeholder="Enter cover image URL (optional)">
+    </div>
+
+    <div class="form-group">
+      <label for="audioFile">Audio File {{!isEditMode ? '*' : ''}}</label>
+      <input 
+        id="audioFile"
+        type="file" 
+        accept="audio/*" 
+        (change)="onFileSelect($event)"
+        class="form-control">
+      <small class="form-hint">
+        {{isEditMode ? 'Leave empty to keep current file' : 'Select an audio file'}}
+      </small>
+    </div>
+
+    <div class="file-info" *ngIf="selectedFile">
+      <p><strong>Selected file:</strong> {{selectedFile.name}}</p>
+      <p><strong>Size:</strong> {{(selectedFile.size / (1024 * 1024)).toFixed(2)}} MB</p>
+      <p><strong>Duration:</strong> {{audioDuration}} seconds</p>
+    </div>
+
+    <div class="form-actions">
+      <button 
+        type="submit" 
+        [disabled]="trackForm.invalid || loading"
+        class="btn btn-primary">
+        {{loading ? 'Saving...' : (isEditMode ? 'Update Track' : 'Create Track')}}
+      </button>
+      
+      <button 
+        type="button" 
+        (click)="cancel()"
+        class="btn btn-secondary">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
