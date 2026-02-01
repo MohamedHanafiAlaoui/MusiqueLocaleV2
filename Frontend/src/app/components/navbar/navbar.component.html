@@ -1,0 +1,25 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <!-- Logo Section -->
+    <div class="navbar-brand">
+      <div class="logo" (click)="navigateToHome()">
+        <i class="fas fa-music"></i>
+        <span class="logo-text">MusicHub</span>
+      </div>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <div class="navbar-menu desktop-menu">
+      <button class="nav-btn home-btn" (click)="navigateToHome()">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </button>
+      
+      <button class="nav-btn add-track-btn" (click)="navigateToAddTrack()">
+        <i class="fas fa-plus-circle"></i>
+        <span>Add Track</span>
+      </button>
+    </div>
+
+  </div>
+</nav>
