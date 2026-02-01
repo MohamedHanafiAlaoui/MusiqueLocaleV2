@@ -1,0 +1,235 @@
+.track-details-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.track-details {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+}
+
+.track-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  gap: 30px;
+}
+
+.track-info h1 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.track-info h2 {
+  margin: 0 0 20px 0;
+  color: #666;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.track-meta {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.category-badge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+}
+
+.duration, .file-size {
+  color: #666;
+  font-size: 14px;
+  background: #f8f9fa;
+  padding: 6px 12px;
+  border-radius: 16px;
+}
+
+.track-cover {
+  flex-shrink: 0;
+}
+
+.cover-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.track-description {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.track-description h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.track-description p {
+  margin: 0;
+  color: #666;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.audio-player {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.audio-player h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.player-controls {
+  margin-bottom: 15px;
+}
+
+.play-btn {
+  padding: 12px 24px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.play-btn:hover {
+  background: #218838;
+}
+
+.audio-info p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.audio-info a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.audio-info a:hover {
+  text-decoration: underline;
+}
+
+.track-actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.track-actions button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.edit-btn {
+  background: #ffc107;
+  color: #333;
+}
+
+.edit-btn:hover {
+  background: #e0a800;
+  transform: translateY(-2px);
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+}
+
+.back-btn {
+  background: #6c757d;
+  color: white;
+}
+
+.back-btn:hover {
+  background: #545b62;
+  transform: translateY(-2px);
+}
+
+.not-found {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.not-found p {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .track-details-container {
+    padding: 10px;
+  }
+  
+  .track-details {
+    padding: 20px;
+  }
+  
+  .track-header {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .track-info h1 {
+    font-size: 24px;
+  }
+  
+  .track-info h2 {
+    font-size: 16px;
+  }
+  
+  .cover-image {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .track-actions {
+    flex-direction: column;
+  }
+  
+  .track-actions button {
+    width: 100%;
+  }
+}
