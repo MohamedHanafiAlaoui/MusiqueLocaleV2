@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TrackDto {
 
-    private long  id;
+    private Long id;
     private String title;
     private String artist;
     private String description;
-    private long duration;
+    private Long duration;
     private MusicCategory category;
-    private String coverImage ;
-    private  double fileSize;
-    private String file;
+    private Long fileSize;
+    private String fileUrl;
+    private String coverImage;
 }

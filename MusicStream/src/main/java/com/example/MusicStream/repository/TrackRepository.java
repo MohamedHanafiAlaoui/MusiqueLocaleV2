@@ -6,11 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
-
-public interface TrackRepository extends JpaRepository<Track,Long> {
-
+public interface TrackRepository extends JpaRepository<Track, Long> {
 
     Page<Track> findByTitleContainingIgnoreCaseAndCategory(String title, MusicCategory musicCategory, Pageable pageable);
-
+    Page<Track> findByTitleContainingIgnoreCase(String title, Pageable pageable);
+    Page<Track> findByCategory(MusicCategory category, Pageable pageable);
 }
