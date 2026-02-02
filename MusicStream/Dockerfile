@@ -1,54 +1,53 @@
-# Étape 1: Build avec Maven
-FROM maven:3.9.4-openjdk-17-slim AS build
+# Multi-stage build for Spring Boot application
+# Stage 1: Build with Maven
+FROM maven:3.9-eclipse-temurin-17 AS builder
 
 WORKDIR /app
 
-# Copier le fichier pom.xml et télécharger les dépendances
+# Copy pom.xml and download dependencies
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
-# Copier le code source
+# Copy source code
 COPY src ./src
 
-# Builder l'application
+# Build the application
 RUN mvn clean package -DskipTests
 
-# Étape 2: Runtime avec OpenJDK
-FROM openjdk:17-jre-slim
+# Stage 2: Runtime with OpenJDK
+FROM eclipse-temurin:17-jre-alpine
 
-# Installer les utilitaires nécessaires
-RUN apt-get update && apt-get install -y \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# Install required utilities
+RUN apk add --no-cache curl
 
-# Créer le répertoire de l'application
+# Create application directory
 WORKDIR /app
 
-# Créer le répertoire pour les uploads
+# Create uploads directory
 RUN mkdir -p /app/uploads/music && \
     chmod 755 /app/uploads/music
 
-# Copier le JAR de l'étape de build
-COPY --from=build /app/target/*.jar app.jar
+# Copy JAR from builder stage
+COPY --from=builder /app/target/*.war app.jar
 
-# Créer un utilisateur non-root
-RUN groupadd -r appuser && useradd -r -g appuser appuser
+# Create non-root user for security
+RUN addgroup -g 1000 appuser && adduser -D -s /bin/sh -u 1000 -G appuser appuser
 RUN chown -R appuser:appuser /app
 USER appuser
 
-# Exposer le port
+# Expose port
 EXPOSE 8080
 
-# Variables d'environnement par défaut
+# Environment variables
 ENV SPRING_PROFILES_ACTIVE=docker
 ENV SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/musicstream
 ENV SPRING_DATASOURCE_USERNAME=musicuser
 ENV SPRING_DATASOURCE_PASSWORD=musicpassword
 ENV SERVER_PORT=8080
 
-# Commande de démarrage
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=docker", "/app/app.jar"]
-
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
     CMD curl -f http://localhost:8080/actuator/health || exit 1
+
+# Start application
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=docker", "/app/app.jar"]

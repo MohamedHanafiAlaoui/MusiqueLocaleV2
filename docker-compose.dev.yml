@@ -1,7 +1,5 @@
-version: '3.8'
-
 services:
-  # Base de données PostgreSQL pour développement
+  # PostgreSQL Database for Development
   postgres:
     image: postgres:15-alpine
     container_name: musique-postgres-dev
@@ -18,7 +16,7 @@ services:
     networks:
       - musique-dev-network
 
-  # Backend Spring Boot pour développement
+  # Spring Boot Backend for Development
   backend:
     build:
       context: ./MusicStream
@@ -42,6 +40,20 @@ services:
       - musique-dev-network
     depends_on:
       - postgres
+
+  # Angular Frontend for Development
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: musique-frontend-dev
+    restart: unless-stopped
+    ports:
+      - "4200:80"
+    networks:
+      - musique-dev-network
+    depends_on:
+      - backend
 
 volumes:
   postgres_dev_data:

@@ -1,21 +1,15 @@
-# Git
-.git
-.gitignore
-
 # Maven
-.mvn/
-mvnw
-mvnw.cmd
 target/
-*.jar
-*.war
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
 # IDE
+.idea
+*.iws
+*.iml
+*.ipr
 .vscode/
-.idea/
-*.swp
-*.swo
-*~
 
 # OS
 .DS_Store
@@ -27,34 +21,61 @@ ehthumbs.db
 Thumbs.db
 
 # Logs
-logs/
 *.log
-
-# Test results
-target/test-classes/
-target/surefire-reports/
-target/failsafe-reports/
-
-# Documentation
-README.md
-docs/
-
-# Spring Boot
-HELP.md
-application*.properties
-application*.yml
-
-# Docker
-Dockerfile*
-docker-compose*
-.dockerignore
+logs/
 
 # Temporary files
+*.tmp
+*.temp
 tmp/
 temp/
 
-# Node.js (si présent)
+# Spring Boot
+application-*.properties
+application-*.yml
+!application-docker.properties
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile*
+.dockerignore
+docker-compose*
+
+# Node.js (if any)
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Build artifacts
+build/
+dist/
+out/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Test coverage
+coverage/
+*.lcov
+
+# Runtime
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache

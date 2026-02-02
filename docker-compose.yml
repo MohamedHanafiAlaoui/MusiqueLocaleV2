@@ -1,7 +1,5 @@
-version: '3.8'
-
 services:
-  # Base de données PostgreSQL
+  # PostgreSQL Database
   postgres:
     image: postgres:15-alpine
     container_name: musique-postgres
@@ -24,7 +22,7 @@ services:
       timeout: 5s
       retries: 5
 
-  # Backend Spring Boot
+  # Spring Boot Backend
   backend:
     build:
       context: ./MusicStream
@@ -57,7 +55,7 @@ services:
       retries: 3
       start_period: 60s
 
-  # Frontend Angular
+  # Angular Frontend
   frontend:
     build:
       context: ./Frontend
@@ -65,43 +63,21 @@ services:
     container_name: musique-frontend
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "4200:80"
     networks:
       - musique-network
     depends_on:
       - backend
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
       interval: 30s
       timeout: 5s
       retries: 3
-
-  # pgAdmin pour la gestion de la base de données (optionnel)
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: musique-pgadmin
-    restart: unless-stopped
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@musiquelocale.com
-      PGADMIN_DEFAULT_PASSWORD: admin123
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
-    ports:
-      - "5050:80"
-    networks:
-      - musique-network
-    depends_on:
-      - postgres
-    profiles:
-      - admin
 
 volumes:
   postgres_data:
     driver: local
   music_uploads:
-    driver: local
-  pgadmin_data:
     driver: local
 
 networks:
